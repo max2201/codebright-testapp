@@ -41,7 +41,6 @@
           <li class="list-item">• A Latin professor at Hampden-Sydney College in Virginia</li>
         </ul>
       </div>
-
     </div>
 
 
@@ -52,11 +51,12 @@
           <h2 class="commentHeading">Write<br/>comment</h2>
           <div class="yellowLine"></div>
         </div>
-<!--        todo:настроить форму-->
+
+
         <form class="commentForm">
-          <input type="text" class="textField" maxlength="256" name="name" data-name="Name" placeholder="Title" id="name"/>
-          <textarea name="field" maxlength="5000" id="field" placeholder="Your comment" class="textArea"></textarea>
-          <button class="submitButton">Send</button>
+          <input type="text" class="textField" placeholder="Title" v-model="commentTitle" maxlength="256" name="name" data-name="Name" id="name" required/>
+          <textarea class="textArea" placeholder="Your comment" v-model="commentBody" maxlength="5000" required></textarea>
+          <button type="submit" class="submitButton" @click="sendComment">Send</button>
         </form>
       </div>
       <Header/>
@@ -70,6 +70,27 @@
 <script>
 export default {
   name: 'home',
+  data() {
+    return {
+      commentTitle: '',
+      commentBody: '',
+    };
+  },
+
+  methods: {
+    sendComment(e) {
+      e.preventDefault();
+      this.$http.post('https://5cbef81d06a6810014c66193.mockapi.io/api/comments', {
+        title: this.commentTitle,
+        body: this.commentBody,
+      })
+        .then((response) => {
+          this.commentTitle = '';
+          this.commentBody = '';
+          return alert('Comment send!');
+        });
+    },
+  },
 };
 </script>
 
