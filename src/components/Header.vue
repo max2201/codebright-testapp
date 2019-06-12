@@ -4,7 +4,7 @@
     <div class="menu">
       <router-link class="menu-item" to="/#aboutUs">About us</router-link>
       <router-link class="menu-item" to="/#writeComment">Write comment</router-link>
-      <router-link class="menu-item" to="/about">Comments</router-link>
+      <router-link class="menu-item" to="/comments">Comments</router-link>
     </div>
   </div>
 </template>

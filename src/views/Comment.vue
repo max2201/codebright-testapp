@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <nav-button buttonText="Back to Comments" whereToGo="/about" class="backToComments"/>
+    <nav-button buttonText="Back to Comments" whereToGo="/comments" class="backToComments"/>
     <h1 class="commentTitle">Lorem Ipsum is simply dummy text of the printing and typesetting industry</h1>
     <p class="commentBody">
       Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's

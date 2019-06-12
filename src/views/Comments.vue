@@ -98,7 +98,7 @@ import Vuex from 'vuex';
 import BackToHome from '@/components/BackToHome';
 
 export default {
-  name: 'about',
+  name: 'comments',
 
   components: { BackToHome },
 

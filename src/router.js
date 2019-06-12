@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
-import About from './views/About.vue';
+import Comments from './views/Comments.vue';
 import Comment from './views/Comment.vue';
 
 Vue.use(Router);
@@ -21,9 +21,9 @@ export default new Router({
       component: Comment,
     },
     {
-      path: '/about',
-      name: 'about',
-      component: About,
+      path: '/comments',
+      name: 'comments',
+      component: Comments,
     },
   ],
   scrollBehavior(to) {
