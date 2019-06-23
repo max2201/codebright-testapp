@@ -52,11 +52,12 @@
           <div class="yellowLine"></div>
         </div>
 
+<!--todo: сделать валидацию формы-->
 
         <form class="commentForm">
           <input type="text" class="textField" placeholder="Title" v-model="commentTitle" maxlength="256" name="name" data-name="Name" id="name" required/>
           <textarea class="textArea" placeholder="Your comment" v-model="commentBody" maxlength="5000" required></textarea>
-          <button type="submit" class="submitButton" @click="sendComment">Send</button>
+          <button type="submit" class="submitButton" @click.prevent="sendComment">Send</button>
         </form>
       </div>
       <Header/>
@@ -68,6 +69,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'home',
   data() {
@@ -76,19 +78,11 @@ export default {
       commentBody: '',
     };
   },
-
   methods: {
-    sendComment(e) {
-      e.preventDefault();
-      this.$http.post('https://5cbef81d06a6810014c66193.mockapi.io/api/comments', {
-        title: this.commentTitle,
-        body: this.commentBody,
-      })
-        .then((response) => {
-          this.commentTitle = '';
-          this.commentBody = '';
-          return alert('Comment send!');
-        });
+    sendComment() {
+      this.$store.dispatch('sendComment', { body: this.commentBody, title: this.commentTitle });
+      this.commentTitle = '';
+      this.commentBody = '';
     },
   },
 };
@@ -96,7 +90,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
   .firstScreen {
     margin-top: 49px;
   }
