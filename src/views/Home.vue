@@ -60,7 +60,6 @@
           <button type="submit" class="submitButton" @click.prevent="sendComment">Send</button>
         </form>
       </div>
-      <Header/>
       <div class="separator"></div>
 
     </div>

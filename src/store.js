@@ -57,6 +57,11 @@ export default new Vuex.Store({
         this.dispatch('loadComments');
       });
     },
-
+    updateComment({ commit }, changeComment) {
+      Axios.put('https://5cbef81d06a6810014c66193.mockapi.io/api/comments/'+changeComment.id, {body:changeComment.body, title:changeComment.title}).then((response) => {
+        // commit('deleteComment', commentid);
+        this.dispatch('loadComments');
+      });
+    },
   },
 });

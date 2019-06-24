@@ -10,7 +10,8 @@
           <p class="commentBody">{{comment.body}}</p>
           <div class="buttonsWrapper">
             <router-link class="button" :to="{ name: 'comment', params: { id: comment.id }}">Read more</router-link>
-            <button class="button delButton" @click="deleteComment(comment.id)">delete comment</button>
+            <button class="button updButton" @click="showModal = true, body=comment.body, title=comment.title, id=comment.id">update comment</button>
+            <button class="button delButton" @click.prevent="deleteComment(comment.id)">delete comment</button>
           </div>
         </div>
       </div>
@@ -19,9 +20,9 @@
         <div class="commentBlock" v-for="(comment) in filterOddComments(comments)">
           <h2 class="commentTitle">{{comment.title}}</h2>
           <p class="commentBody">{{comment.body}}</p>
-<!--          todo: сделать одинаковые кнопки-->
           <div class="buttonsWrapper">
             <router-link class="button" :to="{ name: 'comment', params: { id: comment.id }}">Read more</router-link>
+            <button class="button updButton" @click="showModal = true, body=comment.body, title=comment.title, id=comment.id">update comment</button>
             <button class="button delButton" @click.prevent="deleteComment(comment.id)">delete comment</button>
           </div>
         </div>
@@ -29,17 +30,26 @@
 
     </div>
     <BackToHome/>
-
+    <modal v-if="showModal" @close="showModal = false" :comment-title=title :comment-body=body :comment-id=id></modal>
   </div>
 </template>
 
 <script>
 import Vuex from 'vuex';
 import BackToHome from '@/components/BackToHome';
+import Modal from '../components/Modal';
 
 export default {
   name: 'comments',
-  components: { BackToHome },
+  data() {
+    return {
+      showModal: false,
+      title: '',
+      body: '',
+      id: '',
+    };
+  },
+  components: { Modal, BackToHome },
   computed:
     Vuex.mapState(['comments', 'loading']),
   created() {
@@ -50,6 +60,7 @@ export default {
     deleteComment(id) {
       this.$store.dispatch('deleteComment', id);
     },
+
     filterEvenComments(comments) {
       return comments.filter(function (comment) {
         if (comments.indexOf(comment) % 2 === 0) {
@@ -71,6 +82,7 @@ export default {
 <style scoped>
   .buttonsWrapper{
     display: flex;
+    justify-content: space-between;
   }
   .mainTitle {
     margin-top: 69px;
@@ -130,10 +142,14 @@ export default {
     text-decoration: none;
     border: none;
   }
+  .updButton{
+    background-color: #ffeda5;
+    padding: 0 26px 0 34px;
+    width: 130px;
+  }
   .delButton{
     background-color: #ff8b8d;
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0 26px 0 34px;
+    width: 130px;
   }
-
 </style>

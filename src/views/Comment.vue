@@ -43,12 +43,14 @@
     font-size: 48px;
     line-height: 58px;
     margin: 27px 0 40px;
+    word-wrap: break-word;
   }
   .commentBody{
     color: #101417;
     font-family: 'sofia_proregular','sans-serif';
     font-size: 16px;
     line-height: 28px;
+    word-wrap: break-word;
   }
   .separator{
     border-top: 1px solid #4a4d5e;
