@@ -65,7 +65,7 @@ export default {
     box-sizing: border-box;
   }
   .container{
-    width: 1366px;
+    width: 100%;
     margin: 0 auto;
   }
 </style>
