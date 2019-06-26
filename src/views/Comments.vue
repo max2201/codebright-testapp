@@ -10,7 +10,7 @@
           <p class="commentBody">{{comment.body}}</p>
           <div class="buttonsWrapper">
             <router-link class="button" :to="{ name: 'comment', params: { id: comment.id }}">Read more</router-link>
-            <button class="button updButton" @click="showModal = true, body=comment.body, title=comment.title, id=comment.id">update comment</button>
+            <button class="button updButton" @click="showModal = true, editingComment=comment">update comment</button>
             <button class="button delButton" @click.prevent="deleteComment(comment.id)">delete comment</button>
           </div>
         </div>
