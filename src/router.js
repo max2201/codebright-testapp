@@ -26,6 +26,7 @@ export default new Router({
       component: Comments,
     },
   ],
+  //todo: почему-то глючно работает переход к якорю: может остановиться не дойдя до места назначения,+ при повторном нажатии на кнопку ничего не происходит
   scrollBehavior(to) {
     if (to.hash) {
       return {

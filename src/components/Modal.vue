@@ -6,10 +6,10 @@
           <div class="modal-header">Change comment</div>
 
           <form class="commentForm">
-            <div>{{commentIdLocal}}</div>
-            <input type="text" class="textField"  v-model="commentTitleLocal" maxlength="256" name="name" data-name="Name" id="name" required/>
-            <textarea class="textArea" v-model="commentBodyLocal" maxlength="5000" required></textarea>
-            <button type="submit" class="submitButton"  @click.prevent="updateComment({id:commentIdLocal,title:commentTitleLocal,body:commentBodyLocal}), $emit('close')">Ok</button>
+            <div></div>
+            <input type="text" class="textField"  v-model="editingCommentLocal.title" maxlength="256" name="name" data-name="Name" id="name" required/>
+            <textarea class="textArea" v-model="editingCommentLocal.body" maxlength="5000" required></textarea>
+            <button type="submit" class="submitButton"  @click.prevent="updateComment(editingCommentLocal), $emit('close')">Ok</button>
           </form>
         </div>
     </div>
@@ -20,13 +20,11 @@
   export default {
     data() {
       return {
-        commentIdLocal: this.commentId,
-        commentTitleLocal: this.commentTitle,
-        commentBodyLocal: this.commentBody,
+        editingCommentLocal: { ...this.editingComment },
       };
     },
     name: 'Modal',
-    props: ['commentId', 'commentTitle', 'commentBody'],
+    props: ['editingComment'],
     methods: {
       updateComment(id) {
         this.$store.dispatch('updateComment', id);
