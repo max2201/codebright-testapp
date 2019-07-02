@@ -30,7 +30,7 @@
 
     </div>
     <BackToHome/>
-    <modal v-if="showModal" @close="showModal = false" :editingComment=editingComment></modal>
+    <modal v-if="showModal" @close="showModal = false, editingComment=null" :editingComment=editingComment></modal>
   </div>
 </template>
 

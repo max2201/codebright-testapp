@@ -52,13 +52,23 @@
           <div class="yellowLine"></div>
         </div>
 
-<!--todo: сделать валидацию формы-->
 
         <form class="commentForm">
-          <input type="text" class="textField" placeholder="Title" v-model="commentTitle" maxlength="256" name="name" data-name="Name" id="name" required/>
-          <textarea class="textArea" placeholder="Your comment" v-model="commentBody" maxlength="5000" required></textarea>
+          <div class="wr">
+            <input type="text" class="textField" placeholder="Title" v-model="commentTitle" name="name"  id="title"/>
+            <label for="title">{{errors.titleError}}</label>
+          </div>
+
+<!--          <div class="error" v-if="errors.titleError">заполните поле заголовка</div>-->
+          <div class="wr">
+            <textarea class="textArea" placeholder="Your comment" v-model="commentBody" id="body"></textarea>
+            <label for="body">{{errors.bodyError}}</label>
+          </div>
+
+<!--          <div class="error"  v-if="errors.bodyError">заполните поле комментария</div>-->
           <button type="submit" class="submitButton" @click.prevent="sendComment">Send</button>
         </form>
+
       </div>
       <div class="separator"></div>
 
@@ -73,22 +83,54 @@ export default {
   name: 'home',
   data() {
     return {
+      errors: {},
       commentTitle: '',
       commentBody: '',
     };
   },
   methods: {
     sendComment() {
-      this.$store.dispatch('sendComment', { body: this.commentBody, title: this.commentTitle });
-      this.commentTitle = '';
-      this.commentBody = '';
+      this.errors = {};
+      if (!this.commentTitle) {
+        this.errors.titleError = 'fill in the title field!';
+      }
+      if (!this.commentBody) {
+        this.errors.bodyError = 'fill in the comment field!';
+      }
+      if (this.commentTitle.length > 100) {
+        this.errors.titleError = 'number of characters exceeded!';
+      }
+      if (this.commentBody.length > 2000) {
+        this.errors.bodyError = 'number of characters exceeded!';
+      }
+      if (Object.keys(this.errors).length === 0) {
+        this.$store.dispatch('sendComment', { body: this.commentBody, title: this.commentTitle });
+        this.commentTitle = '';
+        this.commentBody = '';
+      }
     },
   },
+
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.wr{
+  width: 592px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-bottom: 15px;
+}
+  label {
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    font-size: 15px;
+    color: white;
+  }
   .firstScreen {
     margin-top: 49px;
   }
@@ -176,7 +218,6 @@ export default {
   }
   .textArea {
     padding: 13px 20px;
-    margin: 16px 0 15px;
     border: solid 1px #60e3a1;
     border-radius: 3px;
     background-color: transparent;

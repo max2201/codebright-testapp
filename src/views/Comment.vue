@@ -2,7 +2,7 @@
   <div class="wrapper">
 
     <nav-button buttonText="Back to Comments" whereToGo="/comments" class="backToComments"/>
-    <div v-if="loading">загрузка...</div>
+    <div v-if="loading">loading...</div>
     <div v-else>
       <h1 class="commentTitle">{{comment.title}}</h1>
       <p class="commentBody">{{comment.body}}</p>

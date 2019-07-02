@@ -6,10 +6,15 @@
           <div class="modal-header">Change comment</div>
 
           <form class="commentForm">
-            <div></div>
-            <input type="text" class="textField"  v-model="editingCommentLocal.title" maxlength="256" name="name" data-name="Name" id="name" required/>
-            <textarea class="textArea" v-model="editingCommentLocal.body" maxlength="5000" required></textarea>
-            <button type="submit" class="submitButton"  @click.prevent="updateComment(editingCommentLocal), $emit('close')">Ok</button>
+            <div class="wr">
+            <input type="text" class="textField"  v-model="editingCommentLocal.title" name="title" id="title"/>
+            <label for="title">{{errors.titleError}}</label>
+            </div>
+            <div class="wr">
+            <textarea class="textArea" v-model="editingCommentLocal.body" id="body"></textarea>
+            <label for="body">{{errors.bodyError}}</label>
+            </div>
+            <button type="submit" class="submitButton"  @click.prevent="ok? $emit('close'): updateComment(editingCommentLocal) ">Ok</button>
           </form>
         </div>
     </div>
@@ -17,23 +22,56 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        editingCommentLocal: { ...this.editingComment },
-      };
-    },
-    name: 'Modal',
-    props: ['editingComment'],
-    methods: {
-      updateComment(id) {
+export default {
+  data() {
+    return {
+      errors: {},
+      ok: false,
+      editingCommentLocal: { ...this.editingComment },
+    };
+  },
+  name: 'Modal',
+  props: ['editingComment'],
+  methods: {
+    updateComment(id) {
+      this.errors = {};
+      if (!this.editingCommentLocal.title) {
+        this.errors.titleError = 'fill in the title field!';
+      }
+      if (!this.editingCommentLocal.body) {
+        this.errors.bodyError = 'fill in the comment field!';
+      }
+      if (this.editingCommentLocal.title.length > 100) {
+        this.errors.titleError = 'number of characters exceeded!';
+      }
+      if (this.editingCommentLocal.body.length > 2000) {
+        this.errors.bodyError = 'number of characters exceeded!';
+      }
+      if (Object.keys(this.errors).length === 0) {
+        this.ok = true;
         this.$store.dispatch('updateComment', id);
-      },
+      }
     },
-  };
+  },
+};
 </script>
 
 <style scoped>
+  .wr{
+    width: 592px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 15px;
+  }
+  label {
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    font-size: 15px;
+    color: white;
+  }
   .modal-mask {
     position: fixed;
     z-index: 9998;
